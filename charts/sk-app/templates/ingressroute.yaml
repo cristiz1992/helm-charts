@@ -16,7 +16,7 @@ spec:
     services:
       - name: {{ include "name" . | quote }}
         port: {{ .Values.ports.skApp.containerPort }}
-        scheme: {{ .Values.ingressRoute.scheme | quote | default "HTTP" }}
+        scheme: {{ .Values.ingressRoute.scheme | quote | default "http" }}
         nativeLB: true
   {{- if .Values.ingressRoute.ssl }}
   tls: {}
@@ -40,7 +40,7 @@ spec:
     services:
       - name: {{ $ingress.service.name | quote }}
         port: {{ $ingress.service.port }}
-        scheme: {{ $ingress.scheme | quote | default "HTTP" }}
+        scheme: {{ $ingress.scheme | quote | default "http" }}
         nativeLB: true
         {{- with $ingress.service.namespace }}
         namespace: {{ . }}
