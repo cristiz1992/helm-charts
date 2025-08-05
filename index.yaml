@@ -2,6 +2,24 @@ apiVersion: v1
 entries:
   sk-app:
   - apiVersion: v2
+    appVersion: 0.0.8
+    created: "2025-08-05T22:32:15.551128012Z"
+    description: A simple way to deploy kubernetes resources for a Deployment, Service,
+      IngressRoute, etc.
+    digest: ed2faeeba8b851a84f3081738784df6242f7ce480a9f70ca32f2a99b1b7a42aa
+    keywords:
+    - scriptsketch
+    - sk-app
+    - deploy application
+    maintainers:
+    - email: cristiz1992@yahoo.com
+      name: cristiz1992
+    name: sk-app
+    type: application
+    urls:
+    - https://github.com/cristiz1992/helm-charts/releases/download/sk-app-0.0.8/sk-app-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
     appVersion: 0.0.7
     created: "2025-08-05T21:59:34.903070448Z"
     description: A simple way to deploy kubernetes resources for a Deployment, Service,
@@ -38,4 +56,4 @@ entries:
     urls:
     - https://github.com/cristiz1992/helm-charts/releases/download/sk-externals-0.0.3/sk-externals-0.0.3.tgz
     version: 0.0.3
-generated: "2025-08-05T21:59:35.074236419Z"
+generated: "2025-08-05T22:32:15.55113722Z"
