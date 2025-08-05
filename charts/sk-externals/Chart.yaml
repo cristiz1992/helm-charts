@@ -1,0 +1,13 @@
+apiVersion: v2
+name: sk-externals
+version: 0.0.3
+description: A simple way to configure reverse proxy in kubernetes (traefik) to expose external services using ssl, load balancer and optionally health checks.
+type: application
+keywords:
+  - scriptsketch
+  - sk-externals
+  - external services
+maintainers:
+  - name: cristiz1992
+    email: cristiz1992@yahoo.com
+appVersion: 0.0.3

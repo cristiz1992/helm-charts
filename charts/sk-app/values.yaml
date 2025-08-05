@@ -1,0 +1,97 @@
+nameOverride: ""
+partOf: ""
+
+image:
+  registry: docker.io
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+  credentials:
+    username: ""
+    password: ""
+    email: ""
+
+persistence:
+  enable: false
+  existingClaim: ""
+  nameOverride: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  path: "/data"
+  subPath: ""
+  
+ports:
+  skApp:
+    containerPort: 80
+    protocol: "TCP"
+
+deployment:
+  enable: true
+  component: webapp
+  replicas: 1
+  initContainers: []
+  additionalContainers: []
+  command: []
+  args: []
+  readinessPath: ""
+  livenessPath: ""
+  configurationsAndSecretsIncludeMode: Resources
+
+migrationJob:
+  enable: false
+  component: migration-job
+  command: []
+  args: []
+  excludeVolumes: true
+  configurationsAndSecretsIncludeMode: Environment
+
+cronJobs: {}
+
+env: []
+envFrom: []
+
+additionalVolumes: []
+additionalVolumeMounts: []
+
+configurations:
+  #ASPNETCORE_ENVIRONMENT: Production
+secrets:
+  #VaultOptions__VaultRoleId: "role_id"
+
+ingressRoute:
+  enable: false
+  ssl: true
+  host: ""
+  paths: []
+  scheme: "http" 
+  entryPoints:
+  - web
+  - websecure
+
+additionalIngressRoutes: []
+
+resources:
+  limits:
+    cpu: 350m
+    memory: 512Mi
+  requests:
+    cpu: 0
+    memory: 0
+
+podExtraAttributes: {}
+containerExtraAttributes: {}
+securityContext: {}
+
+readinessProbe:
+  failureThreshold: 1
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 5
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 2
+  periodSeconds: 90
+  successThreshold: 1
+  timeoutSeconds: 10

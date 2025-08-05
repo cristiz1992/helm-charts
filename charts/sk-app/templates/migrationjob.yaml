@@ -1,0 +1,33 @@
+{{- if .Values.migrationJob.enable }}
+{{- $_ := set .Values.migrationJob "podExtraAttributes" (deepCopy $.Values.podExtraAttributes | merge (.Values.migrationJob.podExtraAttributes | default (dict))) }}
+{{- $_ := set .Values.migrationJob.podExtraAttributes "restartPolicy" (.Values.migrationJob.podExtraAttributes.restartPolicy | default "OnFailure") }}
+{{- if .Values.image.credentials.username }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "sk.registrySecretName" . | quote }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+  labels:
+    {{- include "sk.labels" . | nindent 4}}
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: {{ include "imagePullSecret" . | quote }}
+{{ end -}}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "name" . }}-migrationjob
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+  labels:
+    {{- include "sk.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ .Values.migrationJob.component }}
+spec:
+  template: {{ template "sk.podTemplate" (dict "root" $ "context" .Values.migrationJob) }}
+{{- end -}}

@@ -1,0 +1,22 @@
+{{- if .Values.deployment.enable }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "sk.labels" . | nindent 4 }}
+  name: {{ include "name" . | quote }}
+spec:
+  ports:
+  {{- range $name, $config := .Values.ports }}
+    {{- if $config }}
+  - port: {{ $config.containerPort }}          
+    protocol: {{ default "TCP" $config.protocol | quote }}          
+    {{- end }}
+  {{- end }}
+  selector:
+    {{- include "sk.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ .Values.deployment.component }}
+  sessionAffinity: None
+  type: ClusterIP
+{{- end -}}

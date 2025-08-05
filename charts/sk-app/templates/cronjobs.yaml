@@ -1,0 +1,21 @@
+{{- range $name, $config := .Values.cronJobs }}
+{{- if $config }}
+{{- $_ := set $config "component" ($config.component | default $name) }}
+{{- $_ := set $config "podExtraAttributes" (deepCopy $.Values.podExtraAttributes | merge ($config.podExtraAttributes | default (dict))) }}
+{{- $_ := set $config.podExtraAttributes "restartPolicy" ($config.podExtraAttributes.restartPolicy | default "OnFailure") }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $name | lower | quote }}
+  labels:   
+    {{- include "sk.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $config.component | quote }}
+spec:
+  schedule: {{ $config.schedule | quote }}
+  suspend: false
+  jobTemplate: 
+    spec:
+      template: {{ include "sk.podTemplate" (dict "root" $ "context" $config) | indent 4 }}
+{{- end }}
+{{- end }}

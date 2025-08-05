@@ -1,0 +1,10 @@
+{{- if .Values.configurations }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sk.configName" . | quote }}
+  labels:   
+    {{- include "sk.labels" . | nindent 4 }}
+data:
+  {{- toYaml .Values.configurations | nindent 2 }}
+{{- end }}

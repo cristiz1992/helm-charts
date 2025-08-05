@@ -1,0 +1,13 @@
+apiVersion: v2
+name: sk-app
+version: 0.0.7
+description: A simple way to deploy kubernetes resources for a Deployment, Service, IngressRoute, etc.
+type: application
+keywords:
+  - scriptsketch
+  - sk-app
+  - deploy application
+maintainers:
+  - name: cristiz1992
+    email: cristiz1992@yahoo.com
+appVersion: 0.0.7

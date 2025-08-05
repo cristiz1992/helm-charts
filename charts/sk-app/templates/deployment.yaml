@@ -1,0 +1,23 @@
+{{- if .Values.deployment.enable }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}-deployment
+  labels:
+    {{- include "sk.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ .Values.deployment.component }}
+spec:
+  replicas: {{ default 1 .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "sk.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ .Values.deployment.component }}
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+  template: {{ template "sk.podTemplate" (dict "root" $ "context" .Values.deployment) }}
+{{- end -}}

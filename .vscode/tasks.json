@@ -1,0 +1,42 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sk-app",
+            "type": "shell",
+            "command": "helm install my-release ./charts/sk-app -f ./charts/sk-app/${input:appValues}.values.yaml --dry-run"
+        },
+        {
+            "label": "sk-externals",
+            "type": "shell",
+            "command": "helm install my-release ./charts/sk-externals -f ./charts/sk-externals/${input:extValues}.values.yaml --dry-run"
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "appValues",
+            "description": "Which values to use?",
+            "options": [
+                "baget",
+                "docker-registry",
+                "proxmox-caddy",
+                "pvc-only",
+                "ingresses-only"
+            ],
+            "default": "ingresses-only"
+        },
+        {
+            "type": "pickString",
+            "id": "extValues",
+            "description": "Which values to use?",
+            "options": [
+                "gitlab",
+                "proxmox"
+            ],
+            "default": "proxmox"
+        }
+    ]
+}

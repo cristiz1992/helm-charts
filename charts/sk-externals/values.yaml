@@ -1,0 +1,22 @@
+externals:
+- name: ext
+  externalName: some-external.system.com
+  ips: []
+  ingressRoute:
+    enable: false
+    ssl: true
+    sslOption:
+      name:
+      namespace:
+    host: my-external.com
+    port: 80
+    scheme: http
+    entryPoints:
+    - websecure
+    allowInsecureSSL: false
+    useStickySession: false
+    healthCheck:
+      enable: false
+      path: "/"
+      interval: "10s"
+      timeout: "3s"
